@@ -4,8 +4,12 @@
 
 local config = {}
 
-function config.zephyr()
-  vim.cmd('colorscheme zephyr')
+-- function config.zephyr()
+--   vim.cmd('colorscheme zephyr')
+-- end
+
+function config.tokyonight()
+  vim.cmd('colorscheme tokyonight')
 end
 
 function config.galaxyline()

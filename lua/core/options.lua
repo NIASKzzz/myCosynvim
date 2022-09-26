@@ -4,7 +4,7 @@
 local cache_dir = os.getenv('HOME') .. '/.cache/nvim/'
 
 vim.opt.termguicolors = true
-vim.opt.mouse = 'nv'
+vim.opt.mouse = 'a'
 vim.opt.errorbells = true
 vim.opt.visualbell = true
 vim.opt.hidden = true
@@ -99,6 +99,7 @@ vim.opt.foldenable = true
 vim.opt.signcolumn = 'yes'
 vim.opt.conceallevel = 2
 vim.opt.concealcursor = 'niv'
+vim.opt.cursorline = true
 
 if vim.loop.os_uname().sysname == 'Darwin' then
   vim.g.clipboard = {
