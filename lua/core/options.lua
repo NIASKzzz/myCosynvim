@@ -1,119 +1,154 @@
 -- author: glepnr https://github.com/glepnir
 -- date: 2022-07-02
 -- License: MIT
-local cache_dir = os.getenv('HOME') .. '/.cache/nvim/'
 
-vim.opt.termguicolors = true
-vim.opt.mouse = 'a'
-vim.opt.errorbells = true
-vim.opt.visualbell = true
-vim.opt.hidden = true
-vim.opt.fileformats = 'unix,mac,dos'
-vim.opt.magic = true
-vim.opt.virtualedit = 'block'
-vim.opt.encoding = 'utf-8'
-vim.opt.viewoptions = 'folds,cursor,curdir,slash,unix'
-vim.opt.sessionoptions = 'curdir,help,tabpages,winsize'
-vim.opt.clipboard = 'unnamedplus'
-vim.opt.wildignorecase = true
-vim.opt.wildignore =
-  '.git,.hg,.svn,*.pyc,*.o,*.out,*.jpg,*.jpeg,*.png,*.gif,*.zip,**/tmp/**,*.DS_Store,**/node_modules/**,**/bower_modules/**'
-vim.opt.backup = false
-vim.opt.writebackup = false
-vim.opt.swapfile = false
-vim.opt.directory = cache_dir .. 'swag/'
-vim.opt.undodir = cache_dir .. 'undo/'
-vim.opt.backupdir = cache_dir .. 'backup/'
-vim.opt.viewdir = cache_dir .. 'view/'
-vim.opt.spellfile = cache_dir .. 'spell/en.uft-8.add'
-vim.opt.history = 2000
-vim.opt.shada = "!,'300,<50,@100,s10,h"
-vim.opt.backupskip = '/tmp/*,$TMPDIR/*,$TMP/*,$TEMP/*,*/shm/*,/private/var/*,.vault.vim'
-vim.opt.smarttab = true
-vim.opt.shiftround = true
-vim.opt.timeout = true
-vim.opt.ttimeout = true
-vim.opt.timeoutlen = 500
-vim.opt.ttimeoutlen = 10
-vim.opt.updatetime = 100
-vim.opt.redrawtime = 1500
-vim.opt.ignorecase = true
-vim.opt.smartcase = true
-vim.opt.infercase = true
-vim.opt.incsearch = true
-vim.opt.wrapscan = true
-vim.opt.complete = '.,w,b,k'
-vim.opt.inccommand = 'nosplit'
-vim.opt.grepformat = '%f:%l:%c:%m'
-vim.opt.grepprg = 'rg --hidden --vimgrep --smart-case --'
-vim.opt.breakat = [[\ \	;:,!?]]
-vim.opt.startofline = false
-vim.opt.whichwrap = 'h,l,<,>,[,],~'
-vim.opt.splitbelow = true
-vim.opt.splitright = true
-vim.opt.switchbuf = 'useopen'
-vim.opt.backspace = 'indent,eol,start'
-vim.opt.diffopt = 'filler,iwhite,internal,algorithm:patience'
-vim.opt.completeopt = 'menu,menuone,noselect'
-vim.opt.jumpoptions = 'stack'
-vim.opt.showmode = false
-vim.opt.shortmess = 'aoOTIcF'
-vim.opt.scrolloff = 2
-vim.opt.sidescrolloff = 5
-vim.opt.foldlevelstart = 99
-vim.opt.ruler = false
-vim.opt.list = true
-vim.opt.showtabline = 2
-vim.opt.winwidth = 30
-vim.opt.winminwidth = 10
-vim.opt.pumheight = 15
-vim.opt.helpheight = 12
-vim.opt.previewheight = 12
-vim.opt.showcmd = false
--- just for nightly
-vim.opt.cmdheight = 2
-vim.opt.cmdwinheight = 5
-vim.opt.equalalways = false
-vim.opt.laststatus = 2
-vim.opt.display = 'lastline'
-vim.opt.showbreak = '↳  '
-vim.opt.listchars = 'tab:»·,nbsp:+,trail:·,extends:→,precedes:←'
-vim.opt.pumblend = 10
-vim.opt.winblend = 10
+local cache_dir = require('core.helper').get_cache_path()
 
-vim.opt.undofile = true
-vim.opt.synmaxcol = 2500
-vim.opt.formatoptions = '1jcroql'
-vim.opt.textwidth = 80
-vim.opt.expandtab = true
-vim.opt.autoindent = true
-vim.opt.tabstop = 2
-vim.opt.shiftwidth = 2
-vim.opt.softtabstop = -1
-vim.opt.breakindentopt = 'shift:2,min:20'
-vim.opt.wrap = false
-vim.opt.linebreak = true
-vim.opt.number = true
-vim.opt.colorcolumn = '80'
-vim.opt.foldenable = true
-vim.opt.signcolumn = 'yes'
-vim.opt.conceallevel = 2
-vim.opt.concealcursor = 'niv'
-vim.opt.cursorline = true
+local options = {
 
-if vim.loop.os_uname().sysname == 'Darwin' then
-  vim.g.clipboard = {
-    name = 'macOS-clipboard',
-    copy = {
-      ['+'] = 'pbcopy',
-      ['*'] = 'pbcopy',
-    },
-    paste = {
-      ['+'] = 'pbpaste',
-      ['*'] = 'pbpaste',
-    },
-    cache_enabled = 0,
-  }
-  vim.g.python_host_prog = '/usr/bin/python'
-  vim.g.python3_host_prog = '/usr/local/bin/python3'
+  backup = false,                          -- creates a backup file
+
+  clipboard = "unnamedplus",               -- allows neovim to access the system clipboard
+
+  cmdheight = 1,                           -- keep status bar position close to bottom
+
+  completeopt = { "menuone", "noselect" }, -- mostly just for cmp
+
+  conceallevel = 0,                        -- so that `` is visible in markdown files
+
+  fileencoding = "utf-8",                  -- the encoding written to a file
+
+  hidden = true,
+  magic = true,
+  virtualedit = 'block',
+  wildignorecase = ture,
+  directory = cache_dir .. 'swap/',
+  undodir = cache_dir .. 'undo/',
+  backupdir = cache_dir .. 'backup/',
+  viewdir = cache_dir .. 'view/',
+  spellfile = cache_dir .. 'spell/en.uft-8.add',
+
+  history = 2000,
+  timeout = true,
+  ttimeout = true,
+  timeoutlen = 500,
+  ttimeoutlen = 10,
+  updatetime = 100,
+  redrawtime = 1500,
+  infercase = true,
+  --completeopt = 'menu,menuone,noselect',
+  --showmode = false,
+  shortmess = 'aoOTIcF',
+  ruler = false,
+  showtabline = 0,
+  winwidth = 30,
+  showcmd = false,
+  laststatus = 3,
+  list = true,
+  listchars = 'tab:»·,nbsp:+,trail:·,extends:→,precedes:←',
+  pumblend = 10,
+  winblend = 10,
+  smarttab = true,
+  autoindent = true,
+
+  -- wrap
+
+  linebreak = true,
+  whichwrap = 'h,l,<,>,[,],~',
+  breakindentopt = 'shift:2,min:20',
+  showbreak = '↳  ',
+  foldlevelstart = 99,
+  foldmethod = 'marker',
+  spelloptions = 'camel',
+  textwidth = 100,
+  colorcolumn = '100',
+
+  hlsearch = true,                         -- highlight all matches on previous search pattern
+
+  ignorecase = true,                       -- ignore case in search patterns
+
+  mouse = "a",                             -- allow the mouse to be used in neovim
+
+  mousescroll = "ver:3,hor:6",
+
+  pumheight = 10,                          -- pop up menu height
+
+  showmode = false,                        -- we don't need to see things like -- INSERT -- anymore
+
+  --showtabline = 2,                         -- always show tabs
+
+  smartcase = true,                        -- smart case
+
+  smartindent = true,                      -- make indenting smarter again
+
+  splitbelow = true,                       -- force all horizontal splits to go below current window
+
+  splitright = true,                       -- force all vertical splits to go to the right of current window
+
+  swapfile = false,                        -- creates a swapfile
+
+  termguicolors = true,                    -- set term gui colors (most terminals support this)
+
+  undofile = true,                         -- enable persistent undo
+
+  writebackup = false,                     -- if a file is being edited by another program (or was written to file while editing with another program), it is not allowed to be edited
+
+  expandtab = true,                        -- convert tabs to spaces
+
+  shiftwidth = 2,                          -- the number of spaces inserted for each indentation
+
+  tabstop = 2,                             -- insert 2 spaces for a tab
+
+  cursorline = true,                       -- highlight the current line
+
+  cursorcolumn = false,                    -- cursor column.
+
+  number = true,                           -- set numbered lines
+
+  relativenumber = false,                  -- set relative numbered lines
+
+  numberwidth = 4,                         -- set number column width to 2 {default 4}
+
+  signcolumn = "yes",                      -- always show the sign column, otherwise it would shift the text each time
+
+  wrap = false,                            -- display lines as one long line
+
+  scrolloff = 8,                           -- keep 8 height offset from above and bottom
+
+  sidescrolloff = 8,                       -- keep 8 width offset from left and right
+
+  --guifont = "monospace:h17",               -- the font used in graphical neovim applications
+
+  --foldmethod = "indent",                     -- fold with nvim_treesitter
+
+  -- foldexpr = "nvim_treesitter#foldexpr()",
+
+  foldenable = false,                      -- no fold to be applied when open a file
+
+  foldlevel = 99,                          -- if not set this, fold will be everywhere
+
+  spell = false,                            -- add spell support
+
+  spelllang = { 'en_us' },                 -- support which languages?
+
+  diffopt="vertical,filler,internal,context:4",                      -- vertical diff split view
+
+  --cscopequickfix="s-,c-,d-,i-,t-,e-",       -- cscope output to quickfix window
+
+}
+
+if vim.fn.executable('rg') == 1 then
+
+    vim.opt.grepformat = '%f:%l:%c:%m,%f:%l:%m'
+
+    vim.opt.grepprg = 'rg --vimgrep --no-heading --smart-case'
+
+end
+
+
+
+for k, v in pairs(options) do
+
+    vim.opt[k] = v
+
 end
